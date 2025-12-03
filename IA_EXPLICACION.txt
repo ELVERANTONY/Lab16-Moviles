@@ -1,0 +1,17 @@
+USO DE IA EN EL DESARROLLO
+
+Para el desarrollo de esta aplicación TaskManager Pro, se utilizó Inteligencia Artificial como asistente de programación (Pair Programmer).
+
+1. Generación de Código:
+   - La IA ayudó a generar la estructura base del proyecto, incluyendo la configuración de Gradle y las dependencias.
+   - Se generaron clases de datos, repositorios y ViewModels siguiendo las mejores prácticas de arquitectura MVVM.
+   - Se crearon las pantallas de interfaz de usuario con Jetpack Compose.
+
+2. Resolución de Problemas:
+   - La IA sugirió soluciones para la navegación y el manejo de estado entre pantallas.
+   - Se optimizó el flujo de autenticación y gestión de tareas.
+
+3. Documentación:
+   - La IA asistió en la redacción de la documentación técnica y explicativa.
+
+El uso de IA permitió acelerar el proceso de desarrollo, reducir errores comunes y asegurar que el código siga estándares modernos y limpios. El desarrollador humano supervisó y validó todo el código generado para garantizar su corrección y funcionalidad.

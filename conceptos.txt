@@ -1,0 +1,27 @@
+CONCEPTOS CLAVE
+
+1. MVVM (Model-View-ViewModel):
+   - Model: Representa los datos y la lógica de negocio (Task, AuthRepository, TaskRepository).
+   - View: La interfaz de usuario (Screens en Compose). Observa el estado del ViewModel.
+   - ViewModel: Gestiona el estado de la UI y comunica la View con el Model (AuthViewModel, TaskViewModel).
+
+2. Firebase Authentication:
+   - Servicio de backend para gestionar usuarios.
+   - Permite registro e inicio de sesión seguros con correo/contraseña.
+   - Se integra fácilmente con Android mediante el SDK de Firebase.
+
+3. Firestore:
+   - Base de datos NoSQL en tiempo real alojada en la nube.
+   - Almacena datos en documentos y colecciones.
+   - Permite sincronización en tiempo real entre dispositivos.
+
+4. Jetpack Compose:
+   - Kit de herramientas moderno para construir UI nativa en Android.
+   - Usa un enfoque declarativo (describes cómo se ve la UI en función del estado).
+   - Simplifica el desarrollo de interfaces complejas.
+
+5. CRUD (Create, Read, Update, Delete):
+   - Create: Crear nuevas tareas (addTask).
+   - Read: Leer tareas en tiempo real (getTasks).
+   - Update: Actualizar tareas existentes (updateTask).
+   - Delete: Eliminar tareas (deleteTask).
