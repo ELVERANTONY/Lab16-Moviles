@@ -7,12 +7,22 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
+import com.google.firebase.auth.FirebaseAuth
+
 class TaskRepository {
     private val db = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
     private val tasksCollection = db.collection("tasks")
 
     fun getTasks(): Flow<List<Task>> = callbackFlow {
-        val listener = tasksCollection.addSnapshotListener { snapshot, error ->
+        val userId = auth.currentUser?.uid
+        if (userId == null) {
+            close(Exception("User not logged in"))
+            return@callbackFlow
+        }
+
+        val listener = tasksCollection.whereEqualTo("userId", userId)
+            .addSnapshotListener { snapshot, error ->
             if (error != null) {
                 close(error)
                 return@addSnapshotListener
@@ -24,8 +34,9 @@ class TaskRepository {
     }
 
     suspend fun addTask(task: Task) {
+        val userId = auth.currentUser?.uid ?: return
         val document = tasksCollection.document()
-        val newTask = task.copy(id = document.id)
+        val newTask = task.copy(id = document.id, userId = userId)
         document.set(newTask).await()
     }
 

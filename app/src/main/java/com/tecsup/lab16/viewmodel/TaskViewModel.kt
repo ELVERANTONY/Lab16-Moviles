@@ -21,8 +21,9 @@ class TaskViewModel : ViewModel() {
         _selectedTask.value = task
     }
 
-    init {
+    fun loadTasks() {
         viewModelScope.launch {
+            _tasks.value = emptyList() // Clear previous tasks
             repository.getTasks().collect {
                 _tasks.value = it
             }

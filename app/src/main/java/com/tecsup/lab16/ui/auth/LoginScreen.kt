@@ -36,6 +36,7 @@ fun LoginScreen(viewModel: AuthViewModel, onLoginSuccess: () -> Unit, onNavigate
         )
 
         Card(
+            colors = CardDefaults.cardColors(containerColor = androidx.compose.ui.graphics.Color.White),
             elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
             modifier = Modifier.fillMaxWidth()
         ) {

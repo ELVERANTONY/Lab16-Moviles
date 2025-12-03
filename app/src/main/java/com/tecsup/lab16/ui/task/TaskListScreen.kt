@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -44,14 +45,19 @@ fun TaskListScreen(viewModel: TaskViewModel, onAddTask: () -> Unit, onTaskClick:
             modifier = Modifier.fillMaxSize().padding(16.dp)
         ) {
             items(tasks) { task ->
-                TaskItem(task = task, onClick = { onTaskClick(task) }, onDelete = { viewModel.deleteTask(task.id) })
+                TaskItem(
+                    task = task, 
+                    onClick = { onTaskClick(task) }, 
+                    onDelete = { viewModel.deleteTask(task.id) },
+                    onToggleCompletion = { viewModel.updateTask(task.copy(isCompleted = it)) }
+                )
             }
         }
     }
 }
 
 @Composable
-fun TaskItem(task: Task, onClick: () -> Unit, onDelete: () -> Unit) {
+fun TaskItem(task: Task, onClick: () -> Unit, onDelete: () -> Unit, onToggleCompletion: (Boolean) -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp).clickable(onClick = onClick),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -64,6 +70,13 @@ fun TaskItem(task: Task, onClick: () -> Unit, onDelete: () -> Unit) {
                 Text(text = task.title, style = MaterialTheme.typography.titleMedium)
                 Text(text = "Prioridad: ${task.priority}", style = MaterialTheme.typography.bodyMedium)
                 Text(text = "Fecha: ${task.deadline}", style = MaterialTheme.typography.bodySmall)
+            }
+            Checkbox(
+                checked = task.isCompleted,
+                onCheckedChange = onToggleCompletion
+            )
+            IconButton(onClick = onClick) {
+                Icon(Icons.Default.Edit, contentDescription = "Editar Tarea", tint = Color.Blue)
             }
             IconButton(onClick = onDelete) {
                 Icon(Icons.Default.Delete, contentDescription = "Eliminar Tarea", tint = Color.Red)

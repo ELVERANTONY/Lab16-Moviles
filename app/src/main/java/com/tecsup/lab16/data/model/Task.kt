@@ -5,5 +5,6 @@ data class Task(
     val title: String = "",
     val priority: String = "Medium", // Low, Medium, High
     val deadline: String = "",
-    val isCompleted: Boolean = false
+    val isCompleted: Boolean = false,
+    val userId: String = ""
 )

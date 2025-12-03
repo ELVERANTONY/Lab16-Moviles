@@ -37,14 +37,20 @@ fun AppNavigation() {
         composable("login") {
             LoginScreen(
                 viewModel = authViewModel,
-                onLoginSuccess = { navController.navigate("taskList") },
+                onLoginSuccess = { 
+                    taskViewModel.loadTasks()
+                    navController.navigate("taskList") 
+                },
                 onNavigateToRegister = { navController.navigate("register") }
             )
         }
         composable("register") {
             RegisterScreen(
                 viewModel = authViewModel,
-                onRegisterSuccess = { navController.navigate("taskList") },
+                onRegisterSuccess = { 
+                    taskViewModel.loadTasks()
+                    navController.navigate("taskList") 
+                },
                 onNavigateToLogin = { navController.navigate("login") }
             )
         }
