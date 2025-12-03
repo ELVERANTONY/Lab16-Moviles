@@ -27,7 +27,9 @@ class TaskRepository {
                 close(error)
                 return@addSnapshotListener
             }
-            val tasks = snapshot?.toObjects(Task::class.java) ?: emptyList()
+            val tasks = snapshot?.documents?.mapNotNull { doc ->
+                doc.toObject(Task::class.java)?.copy(id = doc.id)
+            } ?: emptyList()
             trySend(tasks)
         }
         awaitClose { listener.remove() }

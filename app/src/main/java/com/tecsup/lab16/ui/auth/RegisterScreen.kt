@@ -14,6 +14,7 @@ fun RegisterScreen(viewModel: AuthViewModel, onRegisterSuccess: () -> Unit, onNa
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
+    var passwordError by remember { mutableStateOf<String?>(null) }
     val authState by viewModel.authState.collectAsState()
 
     LaunchedEffect(authState) {
@@ -34,10 +35,18 @@ fun RegisterScreen(viewModel: AuthViewModel, onRegisterSuccess: () -> Unit, onNa
         TextField(value = password, onValueChange = { password = it }, label = { Text("Contraseña") }, visualTransformation = PasswordVisualTransformation())
         Spacer(modifier = Modifier.height(8.dp))
         TextField(value = confirmPassword, onValueChange = { confirmPassword = it }, label = { Text("Confirmar Contraseña") }, visualTransformation = PasswordVisualTransformation())
+        
+        if (passwordError != null) {
+            Text(text = passwordError!!, color = MaterialTheme.colorScheme.error)
+        }
+
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = {
             if (password == confirmPassword) {
+                passwordError = null
                 viewModel.register(email, password)
+            } else {
+                passwordError = "Las contraseñas no coinciden"
             }
         }) {
             Text("Registrarse")

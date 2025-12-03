@@ -18,15 +18,21 @@ import androidx.compose.ui.unit.dp
 import com.tecsup.lab16.data.model.Task
 import com.tecsup.lab16.viewmodel.TaskViewModel
 
+import androidx.compose.ui.platform.LocalContext
+import android.widget.Toast
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskListScreen(viewModel: TaskViewModel, onAddTask: () -> Unit, onTaskClick: (Task) -> Unit, onLogout: () -> Unit) {
+    val context = LocalContext.current
     val tasks by viewModel.tasks.collectAsState()
+    val pendingTasks = tasks.filter { !it.isCompleted }
+    val completedTasks = tasks.filter { it.isCompleted }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Lista de Tareas") },
+                title = { Text("TaskManager Pro") },
                 actions = {
                     IconButton(onClick = onLogout) {
                         Icon(Icons.Default.ExitToApp, contentDescription = "Cerrar Sesión")
@@ -44,22 +50,51 @@ fun TaskListScreen(viewModel: TaskViewModel, onAddTask: () -> Unit, onTaskClick:
             contentPadding = paddingValues,
             modifier = Modifier.fillMaxSize().padding(16.dp)
         ) {
-            items(tasks) { task ->
+            item {
+                Text(
+                    text = "Pendientes",
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.padding(vertical = 8.dp)
+                )
+            }
+            items(pendingTasks, key = { it.id }) { task ->
                 TaskItem(
                     task = task, 
                     onClick = { onTaskClick(task) }, 
                     onDelete = { viewModel.deleteTask(task.id) },
-                    onToggleCompletion = { viewModel.updateTask(task.copy(isCompleted = it)) }
+                    onToggleCompletion = { viewModel.updateTask(task.copy(isCompleted = it)) },
+                    context = context
                 )
+            }
+
+            if (completedTasks.isNotEmpty()) {
+                item {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    HorizontalDivider()
+                    Text(
+                        text = "Completadas",
+                        style = MaterialTheme.typography.headlineSmall,
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    )
+                }
+                items(completedTasks, key = { it.id }) { task ->
+                    TaskItem(
+                        task = task, 
+                        onClick = { onTaskClick(task) }, 
+                        onDelete = { viewModel.deleteTask(task.id) },
+                        onToggleCompletion = { viewModel.updateTask(task.copy(isCompleted = it)) },
+                        context = context
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-fun TaskItem(task: Task, onClick: () -> Unit, onDelete: () -> Unit, onToggleCompletion: (Boolean) -> Unit) {
+fun TaskItem(task: Task, onClick: () -> Unit, onDelete: () -> Unit, onToggleCompletion: (Boolean) -> Unit, context: android.content.Context) {
     Card(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp).clickable(onClick = onClick),
+        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Row(
@@ -70,10 +105,14 @@ fun TaskItem(task: Task, onClick: () -> Unit, onDelete: () -> Unit, onToggleComp
                 Text(text = task.title, style = MaterialTheme.typography.titleMedium)
                 Text(text = "Prioridad: ${task.priority}", style = MaterialTheme.typography.bodyMedium)
                 Text(text = "Fecha: ${task.deadline}", style = MaterialTheme.typography.bodySmall)
+                Text(text = "ID: ${task.id}", style = MaterialTheme.typography.labelSmall, color = Color.Gray)
             }
             Checkbox(
                 checked = task.isCompleted,
-                onCheckedChange = onToggleCompletion
+                onCheckedChange = { 
+                    Toast.makeText(context, "Actualizando tarea...", Toast.LENGTH_SHORT).show()
+                    onToggleCompletion(it) 
+                }
             )
             IconButton(onClick = onClick) {
                 Icon(Icons.Default.Edit, contentDescription = "Editar Tarea", tint = Color.Blue)
