@@ -58,6 +58,12 @@ fun AppNavigation() {
                 onTaskClick = { task ->
                     taskViewModel.selectTask(task)
                     navController.navigate("taskForm")
+                },
+                onLogout = {
+                    authViewModel.logout()
+                    navController.navigate("login") {
+                        popUpTo("login") { inclusive = true }
+                    }
                 }
             )
         }

@@ -16,13 +16,13 @@ fun TaskFormScreen(viewModel: TaskViewModel, onSave: () -> Unit) {
     var deadline by remember(taskToEdit) { mutableStateOf(taskToEdit?.deadline ?: "") }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text(if (taskToEdit == null) "New Task" else "Edit Task", style = MaterialTheme.typography.headlineMedium)
+        Text(if (taskToEdit == null) "Nueva Tarea" else "Editar Tarea", style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.height(16.dp))
-        TextField(value = title, onValueChange = { title = it }, label = { Text("Title") }, modifier = Modifier.fillMaxWidth())
+        TextField(value = title, onValueChange = { title = it }, label = { Text("Título") }, modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(8.dp))
-        TextField(value = priority, onValueChange = { priority = it }, label = { Text("Priority (Low, Medium, High)") }, modifier = Modifier.fillMaxWidth())
+        TextField(value = priority, onValueChange = { priority = it }, label = { Text("Prioridad (Baja, Media, Alta)") }, modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(8.dp))
-        TextField(value = deadline, onValueChange = { deadline = it }, label = { Text("Deadline") }, modifier = Modifier.fillMaxWidth())
+        TextField(value = deadline, onValueChange = { deadline = it }, label = { Text("Fecha Límite") }, modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = {
             val newTask = taskToEdit?.copy(title = title, priority = priority, deadline = deadline)
@@ -35,7 +35,7 @@ fun TaskFormScreen(viewModel: TaskViewModel, onSave: () -> Unit) {
             }
             onSave()
         }, modifier = Modifier.fillMaxWidth()) {
-            Text("Save Task")
+            Text("Guardar Tarea")
         }
     }
 }

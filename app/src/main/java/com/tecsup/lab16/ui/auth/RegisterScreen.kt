@@ -27,24 +27,24 @@ fun RegisterScreen(viewModel: AuthViewModel, onRegisterSuccess: () -> Unit, onNa
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Register", style = MaterialTheme.typography.headlineMedium)
+        Text("Registro", style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.height(16.dp))
-        TextField(value = email, onValueChange = { email = it }, label = { Text("Email") })
+        TextField(value = email, onValueChange = { email = it }, label = { Text("Correo Electrónico") })
         Spacer(modifier = Modifier.height(8.dp))
-        TextField(value = password, onValueChange = { password = it }, label = { Text("Password") }, visualTransformation = PasswordVisualTransformation())
+        TextField(value = password, onValueChange = { password = it }, label = { Text("Contraseña") }, visualTransformation = PasswordVisualTransformation())
         Spacer(modifier = Modifier.height(8.dp))
-        TextField(value = confirmPassword, onValueChange = { confirmPassword = it }, label = { Text("Confirm Password") }, visualTransformation = PasswordVisualTransformation())
+        TextField(value = confirmPassword, onValueChange = { confirmPassword = it }, label = { Text("Confirmar Contraseña") }, visualTransformation = PasswordVisualTransformation())
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = {
             if (password == confirmPassword) {
                 viewModel.register(email, password)
             }
         }) {
-            Text("Register")
+            Text("Registrarse")
         }
         Spacer(modifier = Modifier.height(8.dp))
         TextButton(onClick = onNavigateToLogin) {
-            Text("Already have an account? Login")
+            Text("¿Ya tienes cuenta? Inicia Sesión")
         }
         if (authState?.isFailure == true) {
             Text("Error: ${authState?.exceptionOrNull()?.message}", color = MaterialTheme.colorScheme.error)

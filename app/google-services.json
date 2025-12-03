@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "160352749164",
+    "project_id": "taskmanagerpro-fb24f",
+    "storage_bucket": "taskmanagerpro-fb24f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160352749164:android:8efed212842265aa24ba49",
+        "android_client_info": {
+          "package_name": "com.tecsup.lab16"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0O_Plq9V5I5MEABrE8stKe7CtGHiWjGQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

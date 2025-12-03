@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -18,13 +19,23 @@ import com.tecsup.lab16.viewmodel.TaskViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TaskListScreen(viewModel: TaskViewModel, onAddTask: () -> Unit, onTaskClick: (Task) -> Unit) {
+fun TaskListScreen(viewModel: TaskViewModel, onAddTask: () -> Unit, onTaskClick: (Task) -> Unit, onLogout: () -> Unit) {
     val tasks by viewModel.tasks.collectAsState()
 
     Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Lista de Tareas") },
+                actions = {
+                    IconButton(onClick = onLogout) {
+                        Icon(Icons.Default.ExitToApp, contentDescription = "Cerrar Sesión")
+                    }
+                }
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(onClick = onAddTask) {
-                Icon(Icons.Default.Add, contentDescription = "Add Task")
+                Icon(Icons.Default.Add, contentDescription = "Agregar Tarea")
             }
         }
     ) { paddingValues ->
@@ -51,11 +62,11 @@ fun TaskItem(task: Task, onClick: () -> Unit, onDelete: () -> Unit) {
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(text = task.title, style = MaterialTheme.typography.titleMedium)
-                Text(text = "Priority: ${task.priority}", style = MaterialTheme.typography.bodyMedium)
-                Text(text = "Deadline: ${task.deadline}", style = MaterialTheme.typography.bodySmall)
+                Text(text = "Prioridad: ${task.priority}", style = MaterialTheme.typography.bodyMedium)
+                Text(text = "Fecha: ${task.deadline}", style = MaterialTheme.typography.bodySmall)
             }
             IconButton(onClick = onDelete) {
-                Icon(Icons.Default.Delete, contentDescription = "Delete Task", tint = Color.Red)
+                Icon(Icons.Default.Delete, contentDescription = "Eliminar Tarea", tint = Color.Red)
             }
         }
     }
